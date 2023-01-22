@@ -1,32 +1,31 @@
 import React, { useEffect, useState } from "react";
 import logo from "../../assets/logo.png";
 import { Actor , HttpAgent } from "@dfinity/agent"
-import { idlFactory } from "../../../declarations/opend/index";
+import { idlFactory } from "../../../declarations/nft/nft.did.js";
 import { Principal } from "@dfinity/principal";
 
 function Item(props) {
 
-  const [name ,setName] = useState("");
+  const [name ,setName] = useState();
   const id = Principal.fromText(props.id);
-
-  const localHost = "http://localhost:8080";
+  const localHost = "http://localhost:8080/";
   const agent = new HttpAgent({host : localHost}) ; 
 
-  async function loadNFT(){
-    const NFTActor = await Actor.createActor(idlFactory, {
-      agent,
-      canisterid: id,
+  async function loadNFT(){ 
+    const NFTActor = await Actor.createActor(idlFactory, { //Getting errors on dev console . There is an issue with the id 
+      agent,                                                //that I use here and the canisters actual ID.
+      canisterId: id, 
     });
 
-    const name =  await NFTActor.getName();
-    setName(name);
+    const username =  await NFTActor.getName();
+    setName(username);
   };
 
   useEffect(() => {
-    loadNFT();
+     loadNFT();
   }, [])
 
-  return (
+  return ( 
     <div className="disGrid-item">
       <div className="disPaper-root disCard-root makeStyles-root-17 disPaper-elevation1 disPaper-rounded">
         <img
