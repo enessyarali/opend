@@ -1,5 +1,5 @@
 service : {
   getAsset: () -> (vec nat8) query;
   getName: () -> (text) query;
-  getnftOwner: () -> (principal) query;
+  getOwner: () -> (principal) query;
 }
