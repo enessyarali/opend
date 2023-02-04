@@ -15,7 +15,7 @@ function App() {
       <Header />
       <Minter></Minter>
       {/* <img className="bottom-space" src={homeImage} /> */}
-      <Item id={NFTID}/>
+      {/* <Item id={NFTID}/> */}
       <Footer />
     </div>
   );
