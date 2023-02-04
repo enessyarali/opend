@@ -11,7 +11,7 @@ function Item(props) {
   const [image , setImage] = useState();
 
   const id = Principal.fromText(props.id);
-  const localHost = "http://localhost:8000/"; //
+  const localHost = "http://localhost:8080/"; //
   const agent = new HttpAgent({host : localHost}) ; 
 
   async function loadNFT(){ 

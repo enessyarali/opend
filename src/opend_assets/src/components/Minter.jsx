@@ -11,7 +11,7 @@ function Minter() {
   async function onSubmit(data) {
     // console.log(data.name);
     // console.log(data.image);
-
+    setloaderHidden(false);
     const name  = data.name;
     const image = data.image[0]; //Its an arraay we need to get the first Item on the array.
     const imageArray =  await image.arrayBuffer();
@@ -19,13 +19,14 @@ function Minter() {
 
     const newNFTID = await opend.mint(imageByteData, name);
     setnftPrincipal(newNFTID);
+    setloaderHidden(true)
   }
 
   if(nftPrincipal == "" ){
   return (
     <div className="minter-container">
-    <div className="lds-ellipsis">
-        <div hidden={loaderHidden}></div>
+    <div hidden={loaderHidden} className="lds-ellipsis">
+        <div ></div>
         <div></div>
         <div></div>
         <div></div>
