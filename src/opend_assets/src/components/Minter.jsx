@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useForm } from "../../../../node_modules/react-hook-form/dist/useForm";
-import { opend } from "../../../declarations/opend/index";
+import { useForm } from "react-hook-form";
+import { opend } from "../../../declarations/opend";
 import Item from "./Item";
 function Minter() {
 
