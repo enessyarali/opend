@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import logo from "../../assets/logo.png";
 import { Actor , HttpAgent } from "@dfinity/agent"
 import { idlFactory } from "../../../declarations/nft/nft.did.js";
 import { Principal } from "@dfinity/principal";

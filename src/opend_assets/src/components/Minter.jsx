@@ -17,7 +17,7 @@ function Minter() {
     const imageArray =  await image.arrayBuffer();
     const imageByteData = [...new Uint8Array(imageArray)]; //Nat8 Image data processing
 
-    const newNFTID = await opend.mint(imageByteData, name);
+    const newNFTID =  opend.mint(imageByteData, name);
     setnftPrincipal(newNFTID);
     setloaderHidden(true)
   }
