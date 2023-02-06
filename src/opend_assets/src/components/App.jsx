@@ -12,8 +12,6 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <Minter></Minter>
-     
       {/* <Item id={NFTID}/> */}
       <Footer />
     </div>

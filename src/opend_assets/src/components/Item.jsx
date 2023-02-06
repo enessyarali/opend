@@ -10,9 +10,9 @@ function Item(props) {
   const [image , setImage] = useState();
 
   const id = Principal.fromText(props.id);
-  const localHost = "http://localhost:8080/"; //
+  const localHost = "http://localhost:8080"; //
   const agent = new HttpAgent({host : localHost}) ; 
-
+   agent.fetchRootKey()
   async function loadNFT(){ 
     const NFTActor = await Actor.createActor(idlFactory, { 
       agent,                                                
