@@ -39,7 +39,7 @@ function Header() {
         <Minter/>
       </Route>
       <Route path="/collection">
-        <Gallery/>
+        <Gallery title="My NFTs"/>
       </Route>
       <Route path="/">
       <img className="bottom-space" src={homeImage} />
