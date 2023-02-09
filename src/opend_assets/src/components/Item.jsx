@@ -17,8 +17,10 @@ function Item(props) {
   const localHost = "http://localhost:8080"; //
   const agent = new HttpAgent({host : localHost}) ; 
   agent.fetchRootKey() //This line is local development only.Remove the line incase of Live deployment on IC Network
+
+  let NFTActor;
   async function loadNFT(){ 
-    const NFTActor = await Actor.createActor(idlFactory, { 
+     NFTActor = await Actor.createActor(idlFactory, { 
       agent,                                                
       canisterId: id, 
     });
@@ -63,6 +65,8 @@ function Item(props) {
       if(listingResult == "Success"){
         const OpenDId = await opend.getOpenDCanisterID();
         const transferResult = await NFTActor.transferOwnership(OpenDId)
+        console.log("transfer:" + transferResult);
+        console.log(OpenDId);
       }
     }
   return ( 

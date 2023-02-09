@@ -24,7 +24,7 @@ actor class NFT (name: Text , owner : Principal , content: [Nat8]) = this {
         //class it needs all the inputs  by using "this" we bind all of it.
      };
 
-    public shared(msg) func trasferOwnership(newOwner : Principal) : async Text{
+    public shared(msg) func transferOwnership(newOwner : Principal) : async Text{
         if(msg.caller == nftOwner){
             nftOwner := newOwner;
             return "Success";
