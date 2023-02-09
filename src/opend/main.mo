@@ -76,5 +76,11 @@ actor OpenD {
             return Principal.fromActor(OpenD);
     };
 
- 
+    public query func isListed(id : Principal) : async Bool {
+        if(mapOfListings.get(id) == null){
+            return false;
+        } else {
+            return true ;
+        };
+    };
 };

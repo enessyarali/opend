@@ -12,6 +12,8 @@ function Item(props) {
   const [image , setImage] = useState();
   const [button, setButton] = useState();
   const [priceInput,setPriceInput] = useState();
+  const [loaderHidden , setLoaderHidden] = useState(true)
+  const [blur, setBlur] = useState()
 
   const id = props.id
   const localHost = "http://localhost:8080"; //
@@ -36,12 +38,24 @@ function Item(props) {
     setName(username);
     setOwner(owner.toText()); //Owner data comes in form of principle we have to convert it to text
     setImage(image);
-    setButton(<Button handleClick={handlesell} text={"Sell"}/>)
+
+    const nftIsListed = await opend.isListed(props.id);
+
+    if(nftIsListed){
+      setOwner("OpenD")
+      setBlur({filter : "blur(4px)"});
+    }else{
+      setButton(<Button handleClick={handlesell} text={"Sell"}/>)
+    }
+
+    
+    
   };
 
   useEffect(() => {
      loadNFT();
   }, [])
+
   let price;
   function handlesell(){
     console.log("sell clicked");
@@ -58,8 +72,9 @@ function Item(props) {
   }
 
     async function sellItem(){
-        console.log("Confirm Clicked");
-
+      setBlur({filter : "blur(4px)"})
+      console.log("Confirm Clicked");
+      setLoaderHidden(false)
       const listingResult =   await opend.listItem(props.id , Number(price))
       console.log(listingResult);
       if(listingResult == "Success"){
@@ -67,6 +82,12 @@ function Item(props) {
         const transferResult = await NFTActor.transferOwnership(OpenDId)
         console.log("transfer:" + transferResult);
         console.log(OpenDId);
+        if(transferResult == "Success"){
+          setLoaderHidden(true);
+          setButton();
+          setPriceInput();
+          setOwner("OpenD")
+        }
       }
     }
   return ( 
@@ -75,7 +96,14 @@ function Item(props) {
         <img
           className="disCardMedia-root makeStyles-image-19 disCardMedia-media disCardMedia-img"
           src={image}
+          style={blur}
         />
+        <div className="lds-ellipsis" hidden={loaderHidden}>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
         <div className="disCardContent-root">
           <h2 className="disTypography-root makeStyles-bodyText-24 disTypography-h5 disTypography-gutterBottom">
             {name}<span className="purple-text"></span>
