@@ -3,9 +3,9 @@ import Principal "mo:base/Principal"
 
 actor class NFT (name: Text , owner : Principal , content: [Nat8]) = this {
 
-    let itemName = name;
-    let nftOwner = owner;
-    let imageBytes = content;
+    private let itemName = name;
+    private var nftOwner = owner;
+    private let imageBytes = content;
 
     public query func getName() : async Text { 
         return itemName;
@@ -23,4 +23,14 @@ actor class NFT (name: Text , owner : Principal , content: [Nat8]) = this {
         // we could have directly written NFT as input and it would give the canisterId but since this is a actor 
         //class it needs all the inputs  by using "this" we bind all of it.
      };
+
+    public shared(msg) func trasferOwnership(newOwner : Principal) : async Text{
+        if(msg.caller == nftOwner){
+            nftOwner := newOwner;
+            return "Success";
+        }else{
+            return "Error: Not initiated by NFT owner."
+        };
+    };
+
 };
