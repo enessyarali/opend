@@ -13,7 +13,8 @@ function Item(props) {
   const [button, setButton] = useState();
   const [priceInput,setPriceInput] = useState();
   const [loaderHidden , setLoaderHidden] = useState(true)
-  const [blur, setBlur] = useState()
+  const [blur, setBlur] = useState();
+  const [sellstatus , setSellStatus] = useState("");
 
   const id = props.id
   const localHost = "http://localhost:8080"; //
@@ -39,11 +40,12 @@ function Item(props) {
     setOwner(owner.toText()); //Owner data comes in form of principle we have to convert it to text
     setImage(image);
 
-    const nftIsListed = await opend.isListed(props.id);
+    const nftIsListed = await opend.isListed(id);
 
     if(nftIsListed){
       setOwner("OpenD")
       setBlur({filter : "blur(4px)"});
+      setSellStatus("Listed");
     }else{
       setButton(<Button handleClick={handlesell} text={"Sell"}/>)
     }
@@ -87,6 +89,7 @@ function Item(props) {
           setButton();
           setPriceInput();
           setOwner("OpenD")
+          setSellStatus("Listed")
         }
       }
     }
@@ -106,7 +109,7 @@ function Item(props) {
       </div>
         <div className="disCardContent-root">
           <h2 className="disTypography-root makeStyles-bodyText-24 disTypography-h5 disTypography-gutterBottom">
-            {name}<span className="purple-text"></span>
+            {name}<span className="purple-text"> {sellstatus}</span>
           </h2>
           <p className="disTypography-root makeStyles-bodyText-24 disTypography-body2 disTypography-colorTextSecondary">
             Owner: {owner}
