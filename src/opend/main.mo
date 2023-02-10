@@ -90,15 +90,15 @@ actor OpenD {
     };
 
     public query func getOriginalOwner(id : Principal) : async Principal {
-        var listing  : Listing  =  switch(mapOfListings.get(id))) {
-            case(null) { Principal.fromText("")  };
+        var listing  : Listing  =  switch(mapOfListings.get(id)) {
+            case(null) { return Principal.fromText("")  };
             case(?result) { result };
         };
         return listing.itemOwner;
     };
 
     public query func getListedNFTPrice(id :Principal) : async Nat {
-        var listing  : Listing  =  switch(mapOfListings.get(id))) {
+        var listing  : Listing  =  switch(mapOfListings.get(id)) {
             case(null) { return 0 };
             case(?result) { result };
         };

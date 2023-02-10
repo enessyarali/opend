@@ -17,7 +17,7 @@ function Item(props) {
   const [loaderHidden , setLoaderHidden] = useState(true)
   const [blur, setBlur] = useState();
   const [sellstatus , setSellStatus] = useState("");
-  cosnt [priceLabel ,setPriceLabel] = useState()
+  const [priceLabel ,setPriceLabel] = useState()
 
   const id = props.id
   const localHost = "http://localhost:8080"; //
