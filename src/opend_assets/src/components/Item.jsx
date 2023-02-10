@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Actor , HttpAgent } from "@dfinity/agent"
 import { idlFactory } from "../../../declarations/nft/nft.did.js";
+import { idlFactory as tokenIdlFactory } from "../../../declarations/token/token.did.js";
 import { Principal } from "@dfinity/principal";
 import Button from "./Button.jsx";
 import { opend } from "../../../declarations/opend/index.js";
 import CURRENT_USER_ID from "../index.jsx";
 import PriceLabel from "./PriceLabel.jsx";
+import { token } from "../../../declarations/token/index.js";
 
 function Item(props) {
 
@@ -106,6 +108,18 @@ function Item(props) {
 
     async function handleBuy(){
       console.log("Buy clicked");
+      const tokenActor = await Actor.createActor(tokenIdlFactory , {
+        agent,
+        cannisterId: Principal.fromText("renrk-eyaaa-aaaaa-aaada-cai") 
+      })
+      const sellerId = await opend.getOriginalOwner();
+      const itemPrice = await opend.getListedNFTPrice();
+
+      const result =  await token.transfer(sellerId , itemPrice);
+      if(result == "Success"){
+        const transferResult = await opend.completePurchase(id, sellerId , CURRENT_USER_ID)
+        console.log("purchase :" + transferResult );
+      }
     }
   return ( 
     <div className="disGrid-item">
