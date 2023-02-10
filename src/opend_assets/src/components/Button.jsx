@@ -1,5 +1,5 @@
 import React from "react";
-import { propTypes } from "../../../../node_modules/react-bootstrap/esm/Image";
+
 
 function Button(props){
     return(

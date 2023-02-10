@@ -5,6 +5,7 @@ import { Principal } from "@dfinity/principal";
 import Button from "./Button.jsx";
 import { opend } from "../../../declarations/opend/index.js";
 import CURRENT_USER_ID from "../index.jsx";
+import PriceLabel from "./PriceLabel.jsx";
 
 function Item(props) {
 
@@ -16,6 +17,7 @@ function Item(props) {
   const [loaderHidden , setLoaderHidden] = useState(true)
   const [blur, setBlur] = useState();
   const [sellstatus , setSellStatus] = useState("");
+  cosnt [priceLabel ,setPriceLabel] = useState()
 
   const id = props.id
   const localHost = "http://localhost:8080"; //
@@ -56,6 +58,9 @@ function Item(props) {
       if(originalOwner.toText() != CURRENT_USER_ID.toText()){
       setButton(<Button handleClick={handleBuy} text={"Buy"}/>)}
     }
+
+    const price = await opend.getListedNFTPrice(id)
+    setPriceLabel(<PriceLabel sellPrice={price.toString()} />)
     
   };
 
@@ -117,6 +122,7 @@ function Item(props) {
         <div></div>
       </div>
         <div className="disCardContent-root">
+       {priceLabel}
           <h2 className="disTypography-root makeStyles-bodyText-24 disTypography-h5 disTypography-gutterBottom">
             {name}<span className="purple-text"> {sellstatus}</span>
           </h2>
