@@ -1,4 +1,5 @@
 service : {
+  getListedNFTs: () -> (vec principal) query;
   getOpenDCanisterID: () -> (principal) query;
   getOwnedNFTs: (principal) -> (vec principal) query;
   isListed: (principal) -> (bool) query;
