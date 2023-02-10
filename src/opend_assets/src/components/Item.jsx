@@ -4,6 +4,7 @@ import { idlFactory } from "../../../declarations/nft/nft.did.js";
 import { Principal } from "@dfinity/principal";
 import Button from "./Button.jsx";
 import { opend } from "../../../declarations/opend/index.js";
+import CURRENT_USER_ID from "../index.jsx";
 
 function Item(props) {
 
@@ -40,6 +41,7 @@ function Item(props) {
     setOwner(owner.toText()); //Owner data comes in form of principle we have to convert it to text
     setImage(image);
 
+    if(props.role == "collection"){
     const nftIsListed = await opend.isListed(id);
 
     if(nftIsListed){
@@ -48,9 +50,12 @@ function Item(props) {
       setSellStatus("Listed");
     }else{
       setButton(<Button handleClick={handlesell} text={"Sell"}/>)
+      }
+    }else if(props.role == "discover"){
+      const originalOwner =  await opend.getOriginalOwner(props.id);
+      if(originalOwner.toText() != CURRENT_USER_ID.toText()){
+      setButton(<Button handleClick={handleBuy} text={"Buy"}/>)}
     }
-
-    
     
   };
 
@@ -92,6 +97,10 @@ function Item(props) {
           setSellStatus("Listed")
         }
       }
+    }
+
+    async function handleBuy(){
+      console.log("Buy clicked");
     }
   return ( 
     <div className="disGrid-item">
